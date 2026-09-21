@@ -1,0 +1,11 @@
+*.pdf
+*.md
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/
+tests/
+.env
+data/

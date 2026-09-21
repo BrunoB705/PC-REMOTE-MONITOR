@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Remote Monitor</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>PC Remote Monitor</h1>
+
+        <div class="card">
+            <h2>CPU</h2>
+            <p>Uso: <span id="cpu-usage">--</span>%</p>
+            <p>Temperatura: <span id="cpu-temp">--</span>°C</p>
+        </div>
+
+        <div class="card">
+            <h2>Memoria RAM</h2>
+            <p>Usado: <span id="mem-used">--</span> GB / <span id="mem-total">--</span> GB</p>
+            <p>Porcentaje: <span id="mem-pct">--</span>%</p>
+        </div>
+
+        <div class="card">
+            <h2>Disco</h2>
+            <div id="storage-info">Cargando...</div>
+        </div>
+
+        <div class="card">
+            <h2>Tiempo encendido</h2>
+            <p id="uptime">--</p>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
