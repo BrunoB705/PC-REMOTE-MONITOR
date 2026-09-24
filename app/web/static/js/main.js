@@ -1,40 +1,73 @@
-function formatUptime(seconds) {
-    const d = Math.floor(seconds / 86400);
-    const h = Math.floor((seconds % 86400) / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    if (d > 0) return d + "d " + h + "h " + m + "m";
-    if (h > 0) return h + "h " + m + "m";
-    return m + "m";
-}
+async function updateDashboard() {
+    try {
+        const res = await fetch("/api/metrics");
+        if (!res.ok) return;
+        const data = await res.json();
 
-function updateDashboard() {
-    fetch("/api/metrics")
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("cpu-usage").textContent = data.cpu.usage ?? "--";
-            document.getElementById("cpu-temp").textContent = data.cpu.temperature ?? "N/A";
-            document.getElementById("mem-used").textContent = data.memory.used;
-            document.getElementById("mem-total").textContent = data.memory.total;
-            document.getElementById("mem-pct").textContent = data.memory.percentage;
-
-            const storageDiv = document.getElementById("storage-info");
-            storageDiv.innerHTML = "";
-            for (const [drive, info] of Object.entries(data.storage)) {
-                if (info) {
-                    storageDiv.innerHTML += `
-                        <div class="storage-drive">
-                            <p>${drive}: ${info.used} GB / ${info.total} GB (${info.percentage}%)</p>
-                            <div class="storage-bar">
-                                <div class="storage-fill" style="width: ${info.percentage}%"></div>
-                            </div>
-                        </div>`;
+        // CPU
+        if (data.cpu) {
+            if (data.cpu.usage !== null && data.cpu.usage !== undefined) {
+                const cpuUsageEl = document.getElementById("cpu-usage");
+                if (cpuUsageEl) {
+                    cpuUsageEl.textContent = `${Math.round(data.cpu.usage)} %`;
                 }
             }
+            if (data.cpu.temperature !== null && data.cpu.temperature !== undefined) {
+                const cpuTempEl = document.getElementById("cpu-temp");
+                if (cpuTempEl) {
+                    cpuTempEl.textContent = `${Math.round(data.cpu.temperature)} °C`;
+                }
+            }
+        }
 
-            document.getElementById("uptime").textContent = formatUptime(data.uptime);
-        })
-        .catch(err => console.error("Error:", err));
+        // RAM
+        if (data.memory) {
+            const ramInfoEl = document.getElementById("ram-info");
+            if (ramInfoEl) {
+                const used = data.memory.used;
+                const total = Math.round(data.memory.total);
+                const pct = Math.round(data.memory.percentage);
+                ramInfoEl.textContent = `${used} / ${total} GB (${pct}%)`;
+            }
+        }
+
+        // GPU (if supported in future responses)
+        if (data.gpu) {
+            if (data.gpu.name) {
+                const gpuNameEl = document.getElementById("gpu-name");
+                if (gpuNameEl) gpuNameEl.textContent = data.gpu.name;
+            }
+            if (data.gpu.temperature !== null && data.gpu.temperature !== undefined) {
+                const gpuTempEl = document.getElementById("gpu-temp");
+                if (gpuTempEl) gpuTempEl.textContent = `${Math.round(data.gpu.temperature)} °C`;
+            }
+            if (data.gpu.usage !== null && data.gpu.usage !== undefined) {
+                const gpuUsageEl = document.getElementById("gpu-usage");
+                if (gpuUsageEl) gpuUsageEl.textContent = `${Math.round(data.gpu.usage)} %`;
+            }
+        }
+    } catch (err) {
+        console.error("Error fetching metrics:", err);
+    }
 }
+
+// Button actions
+document.querySelectorAll(".btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+        const action = btn.dataset.action;
+        console.log("Action clicked:", action);
+
+        // Map system vs media actions for future backend handlers
+        const isSystem = ["reiniciar", "apagar", "suspender", "bloquear"].includes(action);
+        const endpoint = isSystem ? `/api/system/${action}` : `/api/media/${action}`;
+
+        try {
+            await fetch(endpoint, { method: "POST" });
+        } catch (e) {
+            // Endpoints might not be implemented yet in backend
+        }
+    });
+});
 
 updateDashboard();
 setInterval(updateDashboard, 2000);

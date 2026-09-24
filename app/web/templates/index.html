@@ -3,36 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC Remote Monitor</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>MI PC • ONLINE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css?v=2">
 </head>
 <body>
-    <div class="container">
-        <h1>PC Remote Monitor</h1>
+    <main class="monitor-card">
+        <header class="header">
+            <h1 class="title">MI PC <span class="dot">•</span> ONLINE</h1>
+        </header>
 
-        <div class="card">
-            <h2>CPU</h2>
-            <p>Uso: <span id="cpu-usage">--</span>%</p>
-            <p>Temperatura: <span id="cpu-temp">--</span>°C</p>
-        </div>
+        <!-- CPU Section -->
+        <section class="metric-section">
+            <div class="metric-row">
+                <span class="label">CPU</span>
+                <span class="device-name" id="cpu-name">Ryzen 5 7600</span>
+            </div>
+            <div class="metric-row sub-row">
+                <span class="temp" id="cpu-temp">43 °C</span>
+                <span class="usage" id="cpu-usage">18 %</span>
+            </div>
+        </section>
 
-        <div class="card">
-            <h2>Memoria RAM</h2>
-            <p>Usado: <span id="mem-used">--</span> GB / <span id="mem-total">--</span> GB</p>
-            <p>Porcentaje: <span id="mem-pct">--</span>%</p>
-        </div>
+        <!-- GPU Section -->
+        <section class="metric-section">
+            <div class="metric-row">
+                <span class="label">GPU</span>
+                <span class="device-name" id="gpu-name">RX 9060 XT</span>
+            </div>
+            <div class="metric-row sub-row">
+                <span class="temp" id="gpu-temp">51 °C</span>
+                <span class="usage" id="gpu-usage">27 %</span>
+            </div>
+        </section>
 
-        <div class="card">
-            <h2>Disco</h2>
-            <div id="storage-info">Cargando...</div>
-        </div>
+        <!-- RAM Section -->
+        <section class="metric-section">
+            <div class="metric-row">
+                <span class="label">RAM</span>
+                <span class="ram-value" id="ram-info">8.4 / 16 GB (52%)</span>
+            </div>
+        </section>
 
-        <div class="card">
-            <h2>Tiempo encendido</h2>
-            <p id="uptime">--</p>
-        </div>
-    </div>
+        <!-- Power Controls -->
+        <section class="actions-section power-grid">
+            <button class="btn" type="button" data-action="reiniciar">Reiniciar</button>
+            <button class="btn" type="button" data-action="apagar">Apagar</button>
+            <button class="btn" type="button" data-action="suspender">Suspender</button>
+            <button class="btn" type="button" data-action="bloquear">Bloquear</button>
+        </section>
 
-    <script src="/static/js/main.js"></script>
+        <!-- Media Controls -->
+        <section class="actions-section media-grid">
+            <button class="btn" type="button" data-action="vol_down">Vol -</button>
+            <button class="btn" type="button" data-action="mute">Mute</button>
+            <button class="btn" type="button" data-action="vol_up">Vol +</button>
+            <button class="btn" type="button" data-action="prev">Prev</button>
+            <button class="btn" type="button" data-action="play_pause">Play/Pause</button>
+            <button class="btn" type="button" data-action="next">Next</button>
+        </section>
+    </main>
+
+    <script src="/static/js/main.js?v=2"></script>
 </body>
 </html>
