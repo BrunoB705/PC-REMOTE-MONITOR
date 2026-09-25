@@ -1,23 +1,15 @@
-import psutil
 from app.services.metrics import manager
 
-def get_cpu_usage():
-    try:
-        return psutil.cpu_percent(interval=None)
-    except Exception:
-        pass
-    return None
 
-def get_cpu_temperature():
+def get_motherboard_temperature():
     try:
         from LibreHardwareMonitor.Hardware import HardwareType, SensorType
         computer = manager.refresh()
         if computer is None:
             return None
-        preferred = ("CPU Package", "Core (Tctl/Tdie)", "CPU (Tctl/Tdie)")
         fallback = None
         for hardware in computer.Hardware:
-            if hardware.HardwareType != HardwareType.Cpu:
+            if hardware.HardwareType != HardwareType.Motherboard:
                 continue
             for sensor in manager.iter_sensors(hardware):
                 if sensor.SensorType != SensorType.Temperature or sensor.Value is None:
@@ -25,28 +17,12 @@ def get_cpu_temperature():
                 value = float(sensor.Value)
                 if value <= 0:
                     continue
-                if sensor.Name in preferred:
+                if "System" in sensor.Name:
                     return value
                 if fallback is None:
                     fallback = value
             return fallback
         return None
-    except Exception:
-        pass
-    return None
-
-def get_cpu_frequency():
-    try:
-        freqs = psutil.cpu_freq()
-        if freqs:
-            return freqs.current
-    except Exception:
-        pass
-    return None
-
-def get_cpu_fan_speed():
-    try:
-        return psutil.cpu_fan_speed().current
     except Exception:
         pass
     return None

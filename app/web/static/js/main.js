@@ -46,6 +46,14 @@ async function updateDashboard() {
                 if (gpuUsageEl) gpuUsageEl.textContent = `${Math.round(data.gpu.usage)} %`;
             }
         }
+
+        // Motherboard
+        if (data.motherboard &&
+            data.motherboard.temperature !== null &&
+            data.motherboard.temperature !== undefined) {
+            const moboTempEl = document.getElementById("mobo-temp");
+            if (moboTempEl) moboTempEl.textContent = `${Math.round(data.motherboard.temperature)} °C`;
+        }
     } catch (err) {
         console.error("Error fetching metrics:", err);
     }

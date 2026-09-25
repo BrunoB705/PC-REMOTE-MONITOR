@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.services.metrics import cpu, memory, storage, uptime
+from app.services.metrics import cpu, gpu, memory, motherboard, storage, uptime
 
 router = APIRouter()
 
@@ -9,6 +9,10 @@ def get_metrics():
         "cpu": {
             "usage": cpu.get_cpu_usage(),
             "temperature": cpu.get_cpu_temperature()
+        },
+        "gpu": gpu.get_gpu(),
+        "motherboard": {
+            "temperature": motherboard.get_motherboard_temperature()
         },
         "memory": memory.get_memory(),
         "storage": storage.get_all_storage(),
