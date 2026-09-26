@@ -1,7 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+
+from app.core.security import require_api_key
 from app.services.metrics import cpu, gpu, memory, motherboard, storage, uptime
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(require_api_key)])
 
 @router.get("/api/metrics")
 def get_metrics():

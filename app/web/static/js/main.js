@@ -1,6 +1,11 @@
 async function updateDashboard() {
     try {
-        const res = await fetch("/api/metrics");
+        const res = await apiFetch("/api/metrics");
+        if (res.status === 401) {
+            clearApiKey();
+            location.reload();
+            return;
+        }
         if (!res.ok) return;
         const data = await res.json();
 
@@ -63,6 +68,7 @@ async function updateDashboard() {
 document.querySelectorAll(".btn").forEach(btn => {
     btn.addEventListener("click", async () => {
         const action = btn.dataset.action;
+        if (!action) return;
         console.log("Action clicked:", action);
 
         // Map system vs media actions for future backend handlers
@@ -70,12 +76,14 @@ document.querySelectorAll(".btn").forEach(btn => {
         const endpoint = isSystem ? `/api/system/${action}` : `/api/media/${action}`;
 
         try {
-            await fetch(endpoint, { method: "POST" });
+            await apiFetch(endpoint, { method: "POST" });
         } catch (e) {
             // Endpoints might not be implemented yet in backend
         }
     });
 });
 
-updateDashboard();
-setInterval(updateDashboard, 2000);
+initAuth(() => {
+    updateDashboard();
+    setInterval(updateDashboard, 2000);
+});

@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css?v=2">
+    <link rel="stylesheet" href="/static/css/style.css?v=3">
 </head>
 <body>
     <main class="monitor-card">
@@ -74,6 +74,16 @@
         </section>
     </main>
 
-    <script src="/static/js/main.js?v=3"></script>
+    <div class="auth-overlay" id="auth-overlay">
+        <form class="auth-box" id="auth-form">
+            <h2>ACCESO</h2>
+            <input type="password" id="auth-key" placeholder="API key" autocomplete="off">
+            <button class="btn" type="submit">Entrar</button>
+            <p class="auth-error" id="auth-error"></p>
+        </form>
+    </div>
+
+    <script src="/static/js/api.js?v=2"></script>
+    <script src="/static/js/main.js?v=4"></script>
 </body>
 </html>

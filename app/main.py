@@ -22,4 +22,7 @@ app.mount("/static", StaticFiles(directory=os.path.join(os.path.dirname(__file__
 
 @app.get("/")
 def dashboard():
-    return FileResponse(os.path.join(os.path.dirname(__file__), "web", "templates", "index.html"))
+    return FileResponse(
+        os.path.join(os.path.dirname(__file__), "web", "templates", "index.html"),
+        headers={"Cache-Control": "no-cache"},
+    )
