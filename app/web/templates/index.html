@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css?v=3">
+    <link rel="stylesheet" href="/static/css/style.css?v=5">
 </head>
 <body>
     <main class="monitor-card">
@@ -61,6 +61,8 @@
             <button class="btn" type="button" data-action="apagar">Apagar</button>
             <button class="btn" type="button" data-action="suspender">Suspender</button>
             <button class="btn" type="button" data-action="bloquear">Bloquear</button>
+            <button class="btn" type="button" data-action="apagar_pantalla">Apagar pantalla</button>
+            <button class="btn" type="button" data-action="cancelar">Cancelar apagado</button>
         </section>
 
         <!-- Media Controls -->
@@ -83,7 +85,29 @@
         </form>
     </div>
 
+    <div class="confirm-overlay hidden" id="confirm-overlay">
+        <div class="confirm-box">
+            <p class="confirm-text" id="confirm-text"></p>
+            <div class="confirm-buttons">
+                <button class="btn" type="button" id="confirm-cancel">Cancelar</button>
+                <button class="btn btn-danger" type="button" id="confirm-ok">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="confirm-overlay hidden" id="countdown-overlay">
+        <div class="confirm-box">
+            <p class="confirm-text" id="countdown-text"></p>
+            <p class="countdown-number" id="countdown-number">30</p>
+            <div class="confirm-buttons single">
+                <button class="btn btn-danger" type="button" id="countdown-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast hidden" id="toast"></div>
+
     <script src="/static/js/api.js?v=2"></script>
-    <script src="/static/js/main.js?v=4"></script>
+    <script src="/static/js/main.js?v=6"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from app.api import metrics
+from app.api import metrics, system
 from app.services.metrics import manager
 import os
 
@@ -17,6 +17,7 @@ async def lifespan(app):
 app = FastAPI(title="PC Remote & Monitor", lifespan=lifespan)
 
 app.include_router(metrics.router)
+app.include_router(system.router)
 
 app.mount("/static", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "web", "static")), name="static")
 
