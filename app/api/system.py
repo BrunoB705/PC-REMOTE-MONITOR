@@ -28,6 +28,13 @@ def run_system_action(action: str, payload: ConfirmPayload | None = None):
     if payload is None or not payload.confirm:
         raise HTTPException(status_code=400, detail="Confirmación requerida")
 
+    if action == "cancelar":
+        outcome = system_service.cancel_shutdown()
+        if outcome is None:
+            raise HTTPException(status_code=500, detail="No se pudo ejecutar la acción")
+        message = "Apagado cancelado" if outcome else "No había ningún apagado programado"
+        return {"status": "ok", "action": action, "message": message}
+
     func, message = ACTIONS[action]
     if not func():
         raise HTTPException(status_code=500, detail="No se pudo ejecutar la acción")
