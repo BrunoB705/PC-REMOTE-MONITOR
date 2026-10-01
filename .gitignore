@@ -13,3 +13,4 @@ data/
 *.dll
 pkg/
 pkg.zip
+.kiro/
