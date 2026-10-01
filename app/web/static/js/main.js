@@ -120,6 +120,21 @@ async function runSystemAction(action) {
     }
 }
 
+async function runMediaAction(action) {
+    try {
+        const res = await apiFetch(`/api/media/${action}`, { method: "POST" });
+        if (res.status === 401) {
+            clearApiKey();
+            location.reload();
+            return;
+        }
+        const data = await res.json().catch(() => ({}));
+        showToast(res.ok ? (data.message || "Acción ejecutada") : (data.detail || data.message || "No se pudo ejecutar la acción"));
+    } catch (e) {
+        showToast("Sin conexión con el servidor");
+    }
+}
+
 // Ventana con contador para apagar/reiniciar
 const COUNTDOWN_ACTIONS = {
     apagar: "Apagando la PC",
@@ -166,8 +181,8 @@ document.querySelectorAll(".btn").forEach(btn => {
             return;
         }
 
-        // Media (Fase 3): backend aún no existe
-        apiFetch(`/api/media/${action}`, { method: "POST" }).catch(() => {});
+        // Media (Fase 3): feedback de éxito/error en el toast
+        runMediaAction(action);
     });
 });
 
