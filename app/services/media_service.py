@@ -5,10 +5,10 @@ logger = logging.getLogger(__name__)
 
 # VK de las teclas multimedia (nunca vienen del usuario)
 VK_VOLUME_MUTE = 0xAD
-VK_VOLUME_DOWN = 0xAF
-VK_VOLUME_UP = 0xAE
-VK_MEDIA_PREV_TRACK = 0xB0
-VK_MEDIA_NEXT_TRACK = 0xB1
+VK_VOLUME_DOWN = 0xAE
+VK_VOLUME_UP = 0xAF
+VK_MEDIA_PREV_TRACK = 0xB1
+VK_MEDIA_NEXT_TRACK = 0xB0
 VK_MEDIA_PLAY_PAUSE = 0xB3
 
 INPUT_KEYBOARD = 1
