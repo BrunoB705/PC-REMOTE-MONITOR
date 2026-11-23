@@ -1,6 +1,6 @@
 # PC Remote & Monitor
 
-Servidor FastAPI en Windows que se controla y se monitorea desde el celular, por la Wi-Fi de tu casa. Proyecto de aprendizaje.
+Servidor FastAPI en Windows que se controla y se monitorea desde el celular, por la Wi-Fi de tu casa.
 
 ## Qué hace
 
